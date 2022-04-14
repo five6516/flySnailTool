@@ -1,0 +1,40 @@
+#include <windows.h>
+
+#define STRINGIFY1(x) #x
+#define STRINGIFY(x) STRINGIFY1(x)
+
+#ifdef FlySnail_EXE
+#define ICON_PATH STRINGIFY(D:/Program/flySnailGui/src/plugin/Core/favicon.ico)
+IDI_ICON1               ICON    DISCARDABLE     ICON_PATH
+#endif
+
+1 VERSIONINFO
+ FILEVERSION 1, 0, 0
+ PRODUCTVERSION 1, 0, 0
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x0L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    {
+        BLOCK "040904E4"
+        {
+            VALUE "FileDescription", "core plugin"
+            VALUE "FileVersion", "1, 0, 0"
+            VALUE "InternalName", "Core"
+            VALUE "LegalCopyright", "Copyright (C) 2022"
+            VALUE "ProductName", "Core"
+            VALUE "ProductVersion", "1, 0, 0"
+        }
+    }
+    BLOCK "VarFileInfo"
+    {
+        VALUE "Translation", 0x409, 1252 // 1252 = 0x04E4
+    }
+END
