@@ -17,6 +17,11 @@ public:
 
 private:
     Ui::Form *ui;
+
+    void initUi();
+    void setDemoListUi();
+    void setWidgetUi();
+
 };
 
 #endif // FORM_H

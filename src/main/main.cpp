@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     coreFile += "libCore.so";
 #endif
 
-    using f_initializePlugin = int (*)(int argc, char *argv[]);
+    using f_initializePlugin = int (*)(QWidget *parent, int argc, char *argv[]);
     using f_delayedInitialize = int (*)();
     using f_shutdownPlugin = int (*)();
     using f_pluginName = const char * (*)();
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
                 return -1;
             }
 
-            if(0 != p_initializePlugin(argc,argv) || 0 !=p_delayedInitialize())
+            if(0 != p_initializePlugin(nullptr, argc, argv) || 0 !=p_delayedInitialize())
             {
                 p_shutdownPlugin();
                 m_Lib.unload();

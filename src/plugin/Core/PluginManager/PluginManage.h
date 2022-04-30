@@ -2,8 +2,7 @@
 #define PLUGINMANAGE_H
 
 #include <QString>
-#include <map>
-#include <string>
+#include <QList>
 #include "PluginSpec.h"
 //#include "ManageForm.h"
 
@@ -16,12 +15,13 @@ public:
     ~CPluginManage();
 
     int findPlugin();
-    int loadPlugin();
+    int loadPlugin(QWidget *parent);
+    int releasePlugin();
     void showManageForm();
     void writeSetting();
     void readSetting();
 
-    std::map<std::string,CPluginSpec*> m_mapPlugin;//插件管理类
+    QList<CPluginSpec*> m_listPlugin;//插件管理类
     QString m_strPluginDir;
     QString m_strSettingFile="/config/Plugin.ini";
 private:

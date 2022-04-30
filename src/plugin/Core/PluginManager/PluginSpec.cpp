@@ -74,11 +74,11 @@ bool CPluginSpec::isPlugin(const QString& fileName)
     return false;
 }
 
-bool CPluginSpec::loadPlugin()
+bool CPluginSpec::loadPlugin(QWidget *parent)
 {
     if(p_pluginWidget)
     {
-        p_initializePlugin(0,0);
+        p_initializePlugin(parent, 0,0);
         return true;
     }
     return false;
@@ -126,7 +126,7 @@ void CPluginSpec::releasePlugin()
     {
         p_shutdownPlugin();
     }
-    m_Lib.unload();
+    //m_Lib.unload();
 }
 
 const char* CPluginSpec::pluginVersion()

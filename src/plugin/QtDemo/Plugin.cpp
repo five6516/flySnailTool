@@ -5,12 +5,11 @@
 
 Form* w = nullptr;
 
-int initializePlugin(int argc, char *argv[])
+int initializePlugin(QWidget* parent, int argc, char *argv[])
 {
     (void)argc;(void)argv;
 
-    w = new Form();
-    w->setAttribute(Qt::WA_DeleteOnClose);
+    w = new Form(parent);
     w->hide();
     return 0;
 }

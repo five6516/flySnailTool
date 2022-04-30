@@ -10,9 +10,9 @@ void appInit()
 
 }
 
-int initializePlugin(int argc, char *argv[])
+int initializePlugin(QWidget* parent, int argc, char *argv[])
 {
-    (void)argc;(void)argv;
+    (void)argc;(void)argv;(void)parent;
 
     appInit();
 

@@ -14,7 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    //释放插件
     delete ui;
+    m_pCPluginManage->releasePlugin();
 }
 
 void MainWindow::initForm(QWidget *widget)
@@ -32,29 +34,29 @@ void MainWindow::loadPlugin()
     m_pCPluginManage->findPlugin();
 
     //加载插件
-    m_pCPluginManage->loadPlugin();
+    m_pCPluginManage->loadPlugin(this);
 
     //加入控件界面
     int i=0;
-    for(auto& plugin : m_pCPluginManage->m_mapPlugin)
+    //for(auto& plugin : m_pCPluginManage->m_mapPlugin.toStdMap())
     {
-        if(!plugin.second->getEnable())
-            continue;
+//        if(!plugin.second->getEnable())
+//            continue;
 
-        QWidget* pWidget = plugin.second->pluginWidget();
+//        QWidget* pWidget = plugin.second->pluginWidget();
 
-        if(plugin.second->pluginType() == Plugin_Type::pop)
-        {
-            pWidget->setAttribute(Qt::WA_DeleteOnClose);
-            pWidget->setWindowModality(Qt::ApplicationModal);
-            if(QDialog::Accepted == ((QDialog*)pWidget)->exec())
-                continue;
-            else
-                exit(0);
-        }
+//        if(plugin.second->pluginType() == Plugin_Type::pop)
+//        {
+//            pWidget->setAttribute(Qt::WA_DeleteOnClose);
+//            pWidget->setWindowModality(Qt::ApplicationModal);
+//            if(QDialog::Accepted == ((QDialog*)pWidget)->exec())
+//                continue;
+//            else
+//                exit(0);
+//        }
 
-        ui->stackedWidget->addWidget(pWidget);//加入QStackedWidget
-        plugin.second->setIndex(i++);
+//        ui->stackedWidget->addWidget(pWidget);//加入QStackedWidget
+//        plugin.second->setIndex(i++);
 
 //        if(g_PluginTorL == PluginTOP)
 //        {

@@ -38,40 +38,57 @@ int CPluginManage::findPlugin()
     {
         QString fileName = fileInfoList.at(inf).absoluteFilePath();
         qDebug()<<fileName;
-        CPluginSpec* pCPluginSpec = new CPluginSpec;
-        if(pCPluginSpec->isPlugin(fileName))
+        CPluginSpec* pluginSpec = new CPluginSpec;
+        if(pluginSpec->isPlugin(fileName))
         {
             qDebug()<<fileName<< "is Plugin";
 
             //配置
-            if (disabledPlugins.contains(QString(pCPluginSpec->pluginName())))
-                pCPluginSpec->setEnable(false);
-            if (forceEnabledPlugins.contains(QString(pCPluginSpec->pluginName())))
-                pCPluginSpec->setEnable(true);
+            if (disabledPlugins.contains(QString(pluginSpec->pluginName())))
+                pluginSpec->setEnable(false);
+            if (forceEnabledPlugins.contains(QString(pluginSpec->pluginName())))
+                pluginSpec->setEnable(true);
 
             //不存在相同名字的插件，如果有，则不加载
-            if(m_mapPlugin.find(std::string(pCPluginSpec->pluginName())) == m_mapPlugin.end())
+            //if(!m_mapPlugin.contains(QString(pluginSpec->pluginName())))
             {
-                pCPluginSpec->setIndex(i++);
-                m_mapPlugin.insert(std::pair<std::string,CPluginSpec*>(std::string(pCPluginSpec->pluginName()),pCPluginSpec));
+                pluginSpec->setIndex(i++);
+                m_listPlugin.push_back(pluginSpec);
             }
-            else
-            {
-                qDebug()<<fileName<< "has same name Plugin";
-            }
+            //else
+            //{
+            //    qDebug()<<fileName<< "has same name Plugin";
+            //}
+        }
+        else
+        {
+            delete pluginSpec;pluginSpec = nullptr;
         }
     }
 
     return  0;
 }
 
-int CPluginManage::loadPlugin()
+int CPluginManage::loadPlugin(QWidget *parent)
 {
-    for(auto& plugin : m_mapPlugin)
+    for(auto i : m_listPlugin)
     {
-        if(plugin.second->getEnable())//开启的插件才加载
-            plugin.second->loadPlugin();
+        if(i->getEnable())//开启的插件才加载
+            i->loadPlugin(parent);
     }
+
+    return 0;
+}
+
+int CPluginManage::releasePlugin()
+{
+    for(auto i : m_listPlugin)
+    {
+        if(i->getEnable())//开启的插件才加载
+            i->releasePlugin();
+    }
+    qDeleteAll(m_listPlugin);
+    m_listPlugin.clear();
 
     return 0;
 }
@@ -92,12 +109,12 @@ void CPluginManage::writeSetting()
     disabledPlugins.clear();
     forceEnabledPlugins.clear();
 
-    for (auto it:m_mapPlugin)
+    for(auto i : m_listPlugin)
     {
-        if (it.second->getEnable())
-            forceEnabledPlugins.append(it.first.c_str());
+        if (i->getEnable())
+            forceEnabledPlugins.append(i->pluginName());
         else
-            disabledPlugins.append(it.first.c_str());
+            disabledPlugins.append(i->pluginName());
     }
 
     settings.setValue(C_IGNORED_PLUGINS,disabledPlugins);

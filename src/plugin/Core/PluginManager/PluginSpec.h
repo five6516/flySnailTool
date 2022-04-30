@@ -10,7 +10,7 @@ public:
     CPluginSpec();
 
     bool isPlugin(const QString& fileName);
-    bool loadPlugin();
+    bool loadPlugin(QWidget *parent);
     void releasePlugin();
     QWidget* pluginWidget();
     const char* pluginName();
@@ -30,7 +30,7 @@ private:
     int m_index;
     QLibrary m_Lib;
 
-    using f_initializePlugin = int(*)(int argc, char *argv[]);
+    using f_initializePlugin = int(*)(QWidget *parent, int argc, char *argv[]);
     using f_delayedInitialize = int(*)();
     using f_shutdownPlugin = int(*)();
     using f_pluginWidget = QWidget*(*)();

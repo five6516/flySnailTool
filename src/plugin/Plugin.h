@@ -18,7 +18,7 @@ typedef enum{
 
 //插件过程  initializePlugin->delayedInitialize->using->shutdownPlugin
 
-extern "C" FlySnail_PLUGIN int initializePlugin(int argc, char *argv[]);
+extern "C" FlySnail_PLUGIN int initializePlugin(QWidget* parent, int argc, char *argv[]);
 extern "C" FlySnail_PLUGIN int delayedInitialize();
 extern "C" FlySnail_PLUGIN int shutdownPlugin();
 
