@@ -37,7 +37,7 @@ const char *pluginCategory()
 
 Plugin_Type pluginType()
 {
-    return Plugin_Type::normal;
+    return Plugin_Type::PLUGIN_NORMAL;
 }
 
 const char *pluginVersion()

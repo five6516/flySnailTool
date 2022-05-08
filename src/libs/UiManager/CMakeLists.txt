@@ -22,14 +22,13 @@ set(HEADERS ${DIR_HEADERS}
 set(SOURCES ${DIR_SRCS}
                 utils/UiHelper.cpp)
 
-
-add_library(UiManager SHARED
+add_library(${PROJECT_NAME} SHARED
   ${HEADERS}
   ${SOURCES}
   ${VERSIONINFO_RC}
   ${MACRO_H}
 )
 
-target_link_libraries(UiManager Qt${QT_VERSION_MAJOR}::Core
+target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Core
                                      Qt${QT_VERSION_MAJOR}::Widgets)
 

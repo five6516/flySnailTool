@@ -55,4 +55,4 @@ compile_commands.json
 
 
 bin/
-src/*VersionInfo.rc
+*VersionInfo.rc

@@ -1,5 +1,5 @@
 ﻿#include "PluginManage.h"
-#include "EasyTempLibrarySearchPath.h"
+#include "LibraryPathSet.h"
 #include <QDir>
 #include <QDebug>
 #include <QLockFile>
@@ -27,7 +27,7 @@ int CPluginManage::findPlugin()
 
     QDir fileDir(m_strPluginDir);
 
-    CEasyTempLibrarySearchPath easylib(m_strPluginDir.toStdString().c_str());
+    CLibraryPathSet easylib(m_strPluginDir.toStdString().c_str());
 
     fileDir.setFilter(QDir::Files);
     QFileInfoList fileInfoList = fileDir.entryInfoList();

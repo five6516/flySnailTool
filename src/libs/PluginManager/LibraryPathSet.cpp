@@ -1,7 +1,7 @@
-﻿#include "EasyTempLibrarySearchPath.h"
-#include <QDebug>
+﻿#include "LibraryPathSet.h"
+//#include <QDebug>
 
-void CEasyTempLibrarySearchPath::setLibrarySearchPath(QString strPath)
+void CLibraryPathSet::setLibrarySearchPath(QString strPath)
 {
     lockLibrarySearchPathMutex();
 #ifdef Q_OS_WIN//如果是WINDOWS系统
@@ -30,7 +30,7 @@ void CEasyTempLibrarySearchPath::setLibrarySearchPath(QString strPath)
     unlockLibrarySearchPathMutex();
 }
 
-void CEasyTempLibrarySearchPath::removeLibrarySearchPath(QString strPath)
+void CLibraryPathSet::removeLibrarySearchPath(QString strPath)
 {
     lockLibrarySearchPathMutex();
 #ifdef Q_OS_WIN//如果是WINDOWS系统
@@ -61,12 +61,12 @@ void CEasyTempLibrarySearchPath::removeLibrarySearchPath(QString strPath)
     unlockLibrarySearchPathMutex();
 }
 
-void CEasyTempLibrarySearchPath::lockLibrarySearchPathMutex()
+void CLibraryPathSet::lockLibrarySearchPathMutex()
 {
     m_mutexLibrarySearchPath.lock();
 }
 
-void CEasyTempLibrarySearchPath::unlockLibrarySearchPathMutex()
+void CLibraryPathSet::unlockLibrarySearchPathMutex()
 {
     m_mutexLibrarySearchPath.unlock();
 }

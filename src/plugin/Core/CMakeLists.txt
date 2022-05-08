@@ -15,24 +15,27 @@ include(plugin)
 # 包含编译设置
 include(global_compile)
 
-file(GLOB DIR_HEADERS ui/*.h)
-file(GLOB DIR_UI ui/*.ui)
+file(GLOB DIR_UI ui/*.*)
+
 aux_source_directory(. DIR_SRCS)
-aux_source_directory(ui DIR_SRCS)
 
 add_library(Core SHARED
   ${DIR_SRCS}
   ${VERSIONINFO_RC}
   ${MACRO_H}
-  ${DIR_HEADERS}
   ${DIR_UI}
 )
 
-target_include_directories(Core PUBLIC ${ROOT_DIR}/src/libs/UiManager)
+target_include_directories(Core PUBLIC ${ROOT_DIR}/src/libs/UiManager
+                                       ${ROOT_DIR}/src/libs/PluginManager)
 
 target_link_libraries(Core Qt${QT_VERSION_MAJOR}::Core
                            Qt${QT_VERSION_MAJOR}::Widgets
-                           UiManager)
+                           UiManager
+                           PluginManager)
 
-target_include_directories(Core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/PluginManager)
-add_subdirectory(PluginManager)
+target_include_directories(Core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/PluginManager
+                                       ${CMAKE_CURRENT_SOURCE_DIR}/Application)
+
+#add_subdirectory(PluginManager)
+add_subdirectory(Application)

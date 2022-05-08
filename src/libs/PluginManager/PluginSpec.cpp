@@ -1,6 +1,5 @@
 ﻿#include "PluginSpec.h"
-#include "EasyTempLibrarySearchPath.h"
-#include "Global.h"
+#include "LibraryPathSet.h"
 #include <QDebug>
 
 CPluginSpec::CPluginSpec()
@@ -117,7 +116,7 @@ Plugin_Type CPluginSpec::pluginType()
     {
         return p_pluginType();
     }
-    return Plugin_Type::normal;
+    return Plugin_Type::PLUGIN_NORMAL;
 }
 
 void CPluginSpec::releasePlugin()
@@ -126,7 +125,7 @@ void CPluginSpec::releasePlugin()
     {
         p_shutdownPlugin();
     }
-    //m_Lib.unload();
+    m_Lib.unload();
 }
 
 const char* CPluginSpec::pluginVersion()

@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "utils/UiHelper.h"
+#include "Application.h"
 #include <QDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -8,20 +9,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    initForm(this);
 }
 
 MainWindow::~MainWindow()
 {
     //释放插件
     delete ui;
-    m_pCPluginManage->releasePlugin();
+
 }
 
 void MainWindow::initForm(QWidget *widget)
 {
-    setWindowTitle("flysnailGui");
+    setWindowTitle("flysnailTool");
 
     loadPlugin();
 }
@@ -30,33 +29,29 @@ void MainWindow::loadPlugin()
 {
     //bool g_PluginTorL = global->getUiSetting()->getValue("PluginTorL",true).toBool();
 
-    //寻找插件
-    m_pCPluginManage->findPlugin();
-
-    //加载插件
-    m_pCPluginManage->loadPlugin(this);
+    QList<CPluginSpec*>* plistPlugin = cApp->getPluginList();
 
     //加入控件界面
     int i=0;
-    //for(auto& plugin : m_pCPluginManage->m_mapPlugin.toStdMap())
+    for(auto& plugin : *plistPlugin)
     {
-//        if(!plugin.second->getEnable())
-//            continue;
+        if(!plugin->getEnable())
+            continue;
 
-//        QWidget* pWidget = plugin.second->pluginWidget();
+        QWidget* pWidget = plugin->pluginWidget();
 
-//        if(plugin.second->pluginType() == Plugin_Type::pop)
-//        {
-//            pWidget->setAttribute(Qt::WA_DeleteOnClose);
-//            pWidget->setWindowModality(Qt::ApplicationModal);
-//            if(QDialog::Accepted == ((QDialog*)pWidget)->exec())
-//                continue;
-//            else
-//                exit(0);
-//        }
+        if(plugin->pluginType() == Plugin_Type::PLUGIN_POP)
+        {
+            pWidget->setAttribute(Qt::WA_DeleteOnClose);
+            pWidget->setWindowModality(Qt::ApplicationModal);
+            if(QDialog::Accepted == ((QDialog*)pWidget)->exec())
+                continue;
+            else
+                exit(0);
+        }
 
-//        ui->stackedWidget->addWidget(pWidget);//加入QStackedWidget
-//        plugin.second->setIndex(i++);
+        ui->stackedWidget->addWidget(pWidget);//加入QStackedWidget
+        plugin->setIndex(i++);
 
 //        if(g_PluginTorL == PluginTOP)
 //        {

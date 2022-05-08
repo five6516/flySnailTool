@@ -1,6 +1,10 @@
 #include "Form.h"
 #include "ui_Form.h"
 #include <QStringList>
+#include <QListWidgetItem>
+
+
+#include <IconListDemo.h>
 
 Form::Form(QWidget *parent) :
     QWidget(parent),
@@ -24,16 +28,15 @@ void Form::initUi()
 
 void Form::setDemoListUi()
 {
-    ui->treeWidget->setColumnCount(2);
-
     QStringList header;
     header << "tab" << "name";
-    ui->treeWidget->setHeaderLabels(header);
+    ui->listWidget->addItem(new QListWidgetItem("sss"));
 
 
 }
 
 void Form::setWidgetUi()
 {
-
+    IconListDemo* pIconListDemo = new IconListDemo();
+    ui->stackedWidget->addWidget(reinterpret_cast<QWidget*>(pIconListDemo));
 }

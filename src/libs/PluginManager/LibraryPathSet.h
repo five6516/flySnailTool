@@ -1,41 +1,40 @@
-﻿#ifndef CEASYTEMPLIBRARYSEARCHPATH_H
-#define CEASYTEMPLIBRARYSEARCHPATH_H
+﻿#ifndef CLIBRARYPATHSET_H
+#define CLIBRARYPATHSET_H
 
-#include <string>
 #include <QString>
 #include <QStringList>
 #include <QMutex>
-#include <QSemaphore>
 
-class CEasyTempLibrarySearchPath
+class CLibraryPathSet
 {
 public:
-    CEasyTempLibrarySearchPath(const char *strPath)
+    CLibraryPathSet(const char *strPath)
     {
         m_strPath=strPath;
         lockLibrarySearchPathMutex();
-        setLibrarySearchPath(m_strPath.c_str());
+        setLibrarySearchPath(m_strPath);
     }
 
-    CEasyTempLibrarySearchPath(QString strPath)
+    CLibraryPathSet(const QString& strPath)
     {
-        m_strPath=strPath.toStdString();
+        m_strPath=strPath;
         lockLibrarySearchPathMutex();
-        setLibrarySearchPath(m_strPath.c_str());
+        setLibrarySearchPath(m_strPath);
     }
 
-    ~CEasyTempLibrarySearchPath()
+    ~CLibraryPathSet()
     {
-        removeLibrarySearchPath(m_strPath.c_str());
+        removeLibrarySearchPath(m_strPath);
         unlockLibrarySearchPathMutex();
     }
 
+private:
     void setLibrarySearchPath(QString strPath);
     void removeLibrarySearchPath(QString strPath);
     void lockLibrarySearchPathMutex();
     void unlockLibrarySearchPathMutex();
-private:
-    std::string m_strPath;
+
+    QString m_strPath;
     QRecursiveMutex m_mutexLibrarySearchPath;
 };
 

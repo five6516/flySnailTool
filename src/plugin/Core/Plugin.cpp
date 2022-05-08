@@ -2,8 +2,7 @@
 #include "Global.h"
 #include "Macro.h"
 #include "ui/MainWindow.h"
-
-MainWindow* w = nullptr;
+#include "Application.h"
 
 void appInit()
 {
@@ -16,9 +15,14 @@ int initializePlugin(QWidget* parent, int argc, char *argv[])
 
     appInit();
 
-    w = new MainWindow();
+    MainWindow* w = new MainWindow();
     w->setAttribute(Qt::WA_DeleteOnClose);
     w->hide();
+
+    cApp->initWindow(w);
+
+    w->initForm(w);
+
     return 0;
 }
 
@@ -26,13 +30,14 @@ int delayedInitialize()
 {
     //w->InitMachineConfig();
     //w->InitPluginugin();
-    w->show();
+    cApp->mainWindow()->show();
     return 0;
 }
 
 int shutdownPlugin()
 {
-    //w->deleteLater();
+    cApp->releaseWindow();
+
     return 0;
 }
 
@@ -48,7 +53,7 @@ const char *pluginCategory()
 
 Plugin_Type pluginType()
 {
-    return Plugin_Type::core;
+    return Plugin_Type::PLUGIN_CORE;
 }
 
 const char *pluginVersion()
@@ -68,5 +73,5 @@ const char *pluginLicense()
 
 QWidget *pluginWidget()
 {
-    return w;
+    return cApp->mainWindow();
 }

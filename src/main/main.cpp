@@ -24,9 +24,11 @@ int main(int argc, char *argv[])
 #endif
 
     //High DPI qt6 always enabled
-    //QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    //QApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+#if (QT_VERSION < QT_VERSION_CHECK(6,0,0))
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+#endif
 
     QApplication a(argc, argv);
     QTranslator translator;

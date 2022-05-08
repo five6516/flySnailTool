@@ -10,10 +10,10 @@
 #endif
 
 typedef enum{
-    core = 0,
-    normal,
-    pop,
-    server
+    PLUGIN_CORE = 0,
+    PLUGIN_NORMAL,
+    PLUGIN_POP,
+    PLUGIN_SERVER
 }Plugin_Type;
 
 //插件过程  initializePlugin->delayedInitialize->using->shutdownPlugin
