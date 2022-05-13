@@ -15,6 +15,10 @@ public:
     explicit IconListDemo(QWidget *parent = nullptr);
     ~IconListDemo();
 
+    void setIcon(const QString& style);
+
+public Q_SLOTS:
+    void styleChange(const QString& style);
 private:
     Ui::IconListDemo *ui;
 };
