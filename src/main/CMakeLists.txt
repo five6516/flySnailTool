@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 project(Main
     VERSION 1.0.1
-    DESCRIPTION "flySnailGui"
+    DESCRIPTION "flySnailTool"
     LANGUAGES CXX
 )
 
