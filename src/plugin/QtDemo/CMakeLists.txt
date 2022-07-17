@@ -6,8 +6,8 @@ project(QtDemo
     LANGUAGES CXX
 )
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets Concurrent)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets Concurrent)
 
 # 包含 plugin cmake
 include(plugin)
@@ -15,19 +15,25 @@ include(plugin)
 # 包含编译设置
 include(global_compile)
 
-file(GLOB DIR_HEADERS *.h)
-file(GLOB DIR_UI *.ui)
-aux_source_directory(. DIR_SRCS)
+file(GLOB DIR_FILES
+    *.*
+    BuildIn/*.*
+    Thread/*.*
+)
+
+include_directories(
+    BuildIn
+    Thread
+)
 
 add_library(QtDemo SHARED
-  ${DIR_SRCS}
+  ${DIR_FILES}
   ${VERSIONINFO_RC}
   ${MACRO_H}
-  ${DIR_HEADERS}
-  ${DIR_UI}
 )
 
 target_link_libraries(QtDemo Qt${QT_VERSION_MAJOR}::Core
                              Qt${QT_VERSION_MAJOR}::Widgets
+                             Qt${QT_VERSION_MAJOR}::Concurrent
                              UiManager
                              Core)

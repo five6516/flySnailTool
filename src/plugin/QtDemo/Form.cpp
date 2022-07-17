@@ -6,6 +6,7 @@
 
 #include <QDialog>
 #include <IconListDemo.h>
+#include <ThreadDemo.h>
 
 Form::Form(QWidget *parent) :
     QWidget(parent),
@@ -30,7 +31,7 @@ void Form::initUi()
 void Form::setDemoListUi()
 {
     demoList << "IconDemo"
-             << "Dialog";
+             << "ThreadDemo";
 
     foreach(QString str , demoList)
     {
@@ -42,11 +43,11 @@ void Form::setDemoListUi()
 
 void Form::setWidgetUi()
 {
-    IconListDemo* pIconListDemo = new IconListDemo();
+    IconListDemo* pIconListDemo = new IconListDemo(this);
+    ThreadDemo* pThreadDemo = new ThreadDemo(this);
 
-    QDialog* pQDialog = new QDialog();
-    ui->stackedWidget->addWidget(reinterpret_cast<QWidget*>(pIconListDemo));
-    ui->stackedWidget->addWidget(reinterpret_cast<QWidget*>(pQDialog));
+    ui->stackedWidget->addWidget(qobject_cast<QWidget*>(pIconListDemo));
+    ui->stackedWidget->addWidget(qobject_cast<QWidget*>(pThreadDemo));
 }
 
 void Form::pressList(QListWidgetItem *item)
